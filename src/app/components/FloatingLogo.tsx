@@ -30,13 +30,13 @@ export function FloatingLogo() {
   }, [mouseX, mouseY]);
 
   return (
-    <motion.div
+    <motion.figure
       style={{
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="relative"
+      className="relative m-0"
     >
       <motion.img
         src={new URL("/logo.webp", import.meta.url).href}
@@ -47,8 +47,9 @@ export function FloatingLogo() {
         transition={{ duration: 1, ease: "easeOut" }}
       />
 
-      <motion.div
-        className="absolute inset-0 bg-brand/20 rounded-full blur-3xl"
+      <motion.span
+        aria-hidden
+        className="absolute inset-0 bg-brand/20 rounded-full blur-3xl block"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -59,6 +60,6 @@ export function FloatingLogo() {
           ease: "easeInOut",
         }}
       />
-    </motion.div>
+    </motion.figure>
   );
 }

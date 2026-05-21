@@ -20,6 +20,7 @@
   --on-dark-hint: rgb(255 255 255 / 0.25);
   --glass: rgb(255 255 255 / 0.05);
   --glass-strong: rgb(255 255 255 / 0.1);
+  --nav: rgb(255 255 255 / 0.1);
   --glass-border: rgb(255 255 255 / 0.1);
   --glass-border-subtle: rgb(255 255 255 / 0.05);
 
@@ -122,6 +123,7 @@
   --color-on-dark-hint: var(--on-dark-hint);
   --color-glass: var(--glass);
   --color-glass-strong: var(--glass-strong);
+  --color-nav: var(--nav);
   --color-glass-border: var(--glass-border);
   --color-glass-border-subtle: var(--glass-border-subtle);
   --shadow-brand-glow: 0 0 24px 4px var(--brand-glow);
@@ -172,6 +174,10 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  #root {
+    @apply min-h-screen bg-page relative overflow-x-hidden;
   }
 
   html {

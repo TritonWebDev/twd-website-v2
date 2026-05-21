@@ -8,19 +8,17 @@ import { ContactPage } from "./pages/ContactPage";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-page relative overflow-x-hidden">
-        <Navigation />
+      <Navigation />
 
-        <main className="relative z-10">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
+      <main className="relative z-10">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </main>
 
-        <Footer />
-      </div>
+      <Footer />
     </BrowserRouter>
   );
 }
