@@ -39,7 +39,7 @@ export function FloatingLogo() {
       className="relative"
     >
       <motion.img
-        src={new URL("/logo.png", import.meta.url).href}
+        src={new URL("/logo.webp", import.meta.url).href}
         alt="Triton Logo"
         className="w-64 h-64 md:w-96 md:h-96 drop-shadow-2xl"
         initial={{ opacity: 0, scale: 0.8 }}
@@ -48,7 +48,7 @@ export function FloatingLogo() {
       />
 
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-[#FFBE50]/20 to-[#C0E0FF]/20 rounded-full blur-3xl"
+        className="absolute inset-0 bg-brand/20 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],

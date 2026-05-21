@@ -13,7 +13,7 @@ export function Navigation() {
   return (
     <motion.nav
       style={{ height: navHeight, opacity: navOpacity }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/5"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-glass-strong border-b border-glass-border-subtle"
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
         <Link to="/">
@@ -23,11 +23,11 @@ export function Navigation() {
             className="flex items-center gap-3 cursor-pointer"
           >
             <img
-              src={new URL("/logo.png", import.meta.url).href}
+              src={new URL("/logo.webp", import.meta.url).href}
               alt="Triton Web Developers"
               className="h-10 w-10 object-contain"
             />
-            <span className="text-white tracking-wide">Triton Web Developers</span>
+            <span className="text-on-dark tracking-wide">Triton Web Developers</span>
           </motion.div>
         </Link>
 
@@ -36,8 +36,8 @@ export function Navigation() {
             to="/"
             className={`text-sm tracking-wide transition-colors duration-200 ${
               isActive("/")
-                ? "text-[#FFBE50]"
-                : "text-white/80 hover:text-white"
+                ? "text-brand"
+                : "text-on-dark-soft hover:text-on-dark"
             }`}
           >
             Home
@@ -46,8 +46,8 @@ export function Navigation() {
             to="/team"
             className={`text-sm tracking-wide transition-colors duration-200 ${
               isActive("/team")
-                ? "text-[#FFBE50]"
-                : "text-white/80 hover:text-white"
+                ? "text-brand"
+                : "text-on-dark-soft hover:text-on-dark"
             }`}
           >
             Team
@@ -56,15 +56,15 @@ export function Navigation() {
             to="/contact"
             className={`text-sm tracking-wide transition-colors duration-200 ${
               isActive("/contact")
-                ? "text-[#FFBE50]"
-                : "text-white/80 hover:text-white"
+                ? "text-brand"
+                : "text-on-dark-soft hover:text-on-dark"
             }`}
           >
             Contact
           </Link>
 
           <Link to="/contact">
-            <button className="px-6 py-2.5 bg-[#FFBE50] text-[#0a1929] rounded-lg tracking-wide transition-all duration-200 ease-out hover:bg-[#D88C0C] hover:scale-[1.02] active:scale-[0.98]">
+            <button className="px-6 py-2.5 bg-brand text-on-brand rounded-lg tracking-wide transition-all duration-200 ease-out hover:bg-brand-dark hover:scale-[1.02] active:scale-[0.98]">
               Get Started
             </button>
           </Link>

@@ -8,7 +8,7 @@ import { ContactPage } from "./pages/ContactPage";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gradient-to-b from-[#173363] via-[#1a4578] to-[#2a5a8f] relative overflow-x-hidden">
+      <div className="min-h-screen bg-page relative overflow-x-hidden">
         <Navigation />
 
         <main className="relative z-10">
