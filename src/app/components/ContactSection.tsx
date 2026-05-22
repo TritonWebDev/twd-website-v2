@@ -25,7 +25,7 @@ export function ContactSection() {
   };
 
   const fieldClassName =
-    "w-full bg-glass border border-glass-border rounded-lg px-4 py-3 text-on-dark placeholder-on-dark-faint focus:outline-none focus:border-brand transition-colors duration-200";
+    "w-full bg-glass border border-glass-border rounded-none px-4 py-3 text-on-dark placeholder-on-dark-faint focus:outline-none focus:border-brand transition-colors duration-200";
 
   return (
     <section
@@ -39,8 +39,11 @@ export function ContactSection() {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="text-center mb-12"
       >
-        <h2 className="text-5xl md:text-6xl text-on-dark tracking-wide mb-4">
-          Request a Website
+        <h2 className="text-5xl md:text-5xl text-on-dark tracking-wide mb-4">
+          Request a {" "}
+          <i>
+          <span className="text-5xl md:text-5xl text-brand tracking-wide mb-4">Website</span>
+          </i>
         </h2>
         <p className="text-on-dark-muted text-lg">
           Tell us about your vision, constraints, and goals. Our student-led team is
@@ -54,7 +57,7 @@ export function ContactSection() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ delay: 0.1, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         onSubmit={handleSubmit}
-        className="w-full bg-glass backdrop-blur-sm border border-glass-border rounded-2xl p-8 md:p-12"
+        className="w-full bg-glass backdrop-blur-sm border border-glass-border  p-8 md:p-12"
       >
         <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 border-0 p-0 m-0 min-w-0">
           <legend className="sr-only">Your contact information</legend>
@@ -112,7 +115,7 @@ export function ContactSection() {
 
         <button
           type="submit"
-          className="w-full bg-brand hover:bg-brand-dark text-on-brand py-4 rounded-lg tracking-wide flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-brand/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 ease-out group"
+          className="w-full bg-brand hover:bg-brand-dark text-on-brand py-4 rounded-none tracking-wide flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-brand/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 ease-out group"
         >
           <span>Submit Request</span>
           <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
