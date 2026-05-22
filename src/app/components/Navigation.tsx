@@ -49,6 +49,16 @@ export function Navigation() {
           </li>
           <li>
             <Link
+              to="/projects"
+              className={`text-sm tracking-wide transition-colors duration-200 ${
+                isActive("/projects") ? "text-brand" : "text-on-dark"
+              }`}
+            >
+              Projects
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/contact"
               className={`text-sm tracking-wide transition-colors duration-200 ${
                 isActive("/contact") ? "text-brand" : "text-on-dark"
