@@ -10,7 +10,6 @@ export function Footer() {
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12">
           
-          {/* Column 1: Brand / Manifesto (Spans 5 cols on desktop) */}
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -18,8 +17,7 @@ export function Footer() {
             transition={{ duration: 0.4 }}
             className="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left"
           >
-            {/* Using your custom Cormorant Garamond font token (--font-serif / text-serif) */}
-            <h2 className="font-serif text-2xl font-semibold text-on-dark tracking-tight mb-3">
+            <h2 className="font-serif text-2xl font-semibold text-brand tracking-tight mb-3">
               Triton Web Developers
             </h2>
             <p className="text-on-dark-subtle text-sm max-w-sm leading-relaxed">
