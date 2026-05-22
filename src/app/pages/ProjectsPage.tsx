@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Github, ExternalLink, Code2, Globe, Eye, ImageIcon } from "lucide-react";
+import { Github, ExternalLink, ImageIcon, BookOpen, X, ArrowRight } from "lucide-react";
 
 interface Project {
   id: string;
@@ -10,11 +10,19 @@ interface Project {
   category: "completed" | "in-progress";
   liveUrl?: string;
   githubUrl?: string;
-  imageUrl?: string; // Route path to your image asset (e.g., "/images/project1.png")
+  imageUrl?: string;
+  devBlog?: DevBlogEntry[];
+}
+
+interface DevBlogEntry {
+  date: string;
+  title: string;
+  body: string;
 }
 
 export function ProjectsPage() {
   const [filter, setFilter] = useState<"all" | "completed" | "in-progress">("all");
+  const [blogProject, setBlogProject] = useState<Project | null>(null);
 
   const projects: Project[] = [
     {
@@ -25,151 +33,167 @@ export function ProjectsPage() {
       category: "completed",
       liveUrl: "https://tritonmc.com/",
       githubUrl: "https://github.com/TritonWebDev/triton-minecraft",
-      imageUrl: "/projects/tritonmc.png", // Add paths to your public assets once ready
+      imageUrl: "/projects/tritonmc.png",
     },
   ];
 
-  const filteredProjects = filter === "all" 
-    ? projects 
+  const filteredProjects = filter === "all"
+    ? projects
     : projects.filter(p => p.category === filter);
 
+  const tabs = [
+    { id: "all" as const, label: "All" },
+    { id: "completed" as const, label: "Completed" },
+    { id: "in-progress" as const, label: "In Development" },
+  ];
+
   return (
-    <main className="min-h-screen bg-page text-on-dark pt-32 pb-24 px-6 relative overflow-hidden">
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-navy-deep/40 blur-[150px] pointer-events-none" />
+    <main className="min-h-screen pt-32 pb-24 px-6">
+      <div className="max-w-6xl mx-auto">
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        
-        {/* Header Block */}
-        <header className="max-w-2xl mb-16 text-center md:text-left">
-          <h1 className="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-on-dark mb-4">
-            Projects We've Built
-          </h1>
-        </header>
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16 w-full"
+        >
+          <p className="text-brand text-xs uppercase tracking-[0.3em] mb-4 font-medium">
+            Our Work
+          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <h1 className="text-4xl md:text-5xl text-on-dark leading-tight">
+              Projects we've{" "}
+              <span className="italic text-brand">shipped.</span>
+            </h1>
+          </div>
+        </motion.header>
 
-        {/* Filter Navigation Links */}
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 border-b border-glass-border-subtle pb-8 mb-12">
-          {([
-            { id: "all", label: "All Projects" },
-            { id: "completed", label: "Completed" },
-            { id: "in-progress", label: "In Development" }
-          ] as const).map((tab) => (
+        {/* Filter tabs */}
+        <div className="flex items-center gap-8 border-b border-glass-border-subtle mb-12">
+          {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id)}
-              className={`px-4 py-2 rounded-lg text-xs font-medium uppercase tracking-wider transition-all duration-200 relative cursor-pointer ${
-                filter === tab.id 
-                  ? "text-on-brand bg-brand" 
-                  : "text-on-dark-subtle hover:text-on-dark hover:bg-glass"
+              className={`pb-3 text-xs uppercase tracking-[0.2em] transition-colors duration-200 relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+                filter === tab.id
+                  ? "text-brand"
+                  : "text-on-dark-faint hover:text-on-dark-subtle"
               }`}
             >
               {tab.label}
+              {filter === tab.id && (
+                <motion.span
+                  layoutId="filter-underline"
+                  className="absolute bottom-0 left-0 right-0 h-px bg-brand"
+                />
+              )}
             </button>
           ))}
         </div>
 
-        {/* Portfolio Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid */}
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
-              <motion.article
+              <motion.li
                 key={project.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
-                className="group relative flex flex-col justify-between bg-navy-deep/20 border border-glass-border rounded-xl overflow-hidden backdrop-blur-md hover:border-brand/30 transition-all duration-200 shadow-lg"
+                transition={{ duration: 0.2 }}
               >
-                {/* Image Container Section */}
-                <div className="h-44 w-full bg-navy-deep/50 relative overflow-hidden flex items-center justify-center border-b border-glass-border-subtle">
-                  {project.imageUrl ? (
-                    <img 
-                      src={project.imageUrl} 
-                      alt={`${project.title} screenshot`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  ) : (
-                    /* Elegant fallback layout if imageUrl is missing/empty */
-                    <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/10 to-navy-deep/40 flex flex-col items-center justify-center text-on-dark-hint select-none">
-                      <ImageIcon className="w-8 h-8 mb-2 stroke-[1.25]" />
-                      <span className="text-[10px] tracking-widest uppercase font-medium">Image soon to be added...</span>
-                    </div>
-                  )}
+                <article className="group flex flex-col h-full border border-glass-border hover:border-brand/30 transition-colors duration-300">
 
-                  {/* Category Status Tag */}
-                  <div className="absolute top-4 right-4 bg-navy-deep/80 backdrop-blur-md border border-glass-border px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-on-dark-strong z-10">
-                    {project.category === "completed" ? "Completed" : "Developing"}
+                  {/* Image */}
+                  <div className="h-48 w-full bg-navy-deep relative overflow-hidden border-b border-glass-border-subtle flex items-center justify-center">
+                    {project.imageUrl ? (
+                      <img
+                        src={project.imageUrl}
+                        alt={`${project.title} screenshot`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-on-dark-dim select-none gap-2">
+                        <ImageIcon className="w-6 h-6 stroke-[1.25]" />
+                        <span className="text-[10px] tracking-widest uppercase">Coming soon</span>
+                      </div>
+                    )}
+                    <span className="absolute top-3 left-3 bg-page/80 backdrop-blur-sm border border-glass-border text-[10px] uppercase tracking-[0.2em] text-on-dark-faint px-2.5 py-1">
+                      {project.category === "completed" ? "Completed" : "Developing"}
+                    </span>
                   </div>
-                </div>
 
-                {/* Info and Descriptions */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-serif text-xl font-medium tracking-wide text-on-dark mb-2.5 transition-colors duration-200">
+                  {/* Body */}
+                  <div className="p-7 flex flex-col flex-1">
+                    <h3 className="text-lg text-on-dark mb-2 leading-snug">
                       {project.title}
                     </h3>
-                    <p className="text-on-dark-subtle text-sm leading-relaxed mb-6">
+                    <p className="text-on-dark-subtle text-sm leading-relaxed mb-6 flex-1">
                       {project.description}
                     </p>
-                  </div>
 
-                  {/* Technology Badges and Actions */}
-                  <div>
+                    {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-6">
                       {project.tags.map((tag) => (
-                        <span 
+                        <span
                           key={tag}
-                          className="bg-glass-strong text-on-dark-strong text-[11px] px-2.5 py-1 rounded"
+                          className="border border-glass-border text-on-dark-dim text-[10px] px-2 py-0.5 uppercase tracking-wider"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-between border-t border-glass-border-subtle pt-4 mt-auto">
-                      {project.githubUrl ? (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-on-dark-faint hover:text-brand transition-colors duration-200"
-                        >
-                          <Github className="w-4 h-4" />
-                          <span>Github Repo</span>
-                        </a>
-                      ) : (
-                        <div />
-                      )}
+                    {/* Links row */}
+                    <div className="flex items-center justify-between border-t border-glass-border-subtle pt-5">
+                      <div className="flex items-center gap-4">
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-on-dark-faint hover:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                          >
+                            <Github className="w-3.5 h-3.5" />
+                            <span>GitHub</span>
+                          </a>
+                        )}
+                      </div>
 
                       {project.liveUrl && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand hover:text-brand-dark transition-colors duration-200"
+                          className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-brand hover:text-brand-dark transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                         >
                           <span>Launch Site</span>
-                          <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                          <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
-                      
                     </div>
                   </div>
-                </div>
 
-              </motion.article>
+                </article>
+              </motion.li>
             ))}
           </AnimatePresence>
-        </div>
+        </ul>
 
-        {/* Empty State Fallback */}
+        {/* Empty state */}
         {filteredProjects.length === 0 && (
-          <div className="text-center py-24 border border-dashed border-glass-border rounded-xl bg-navy-deep/10">
-            <p className="text-on-dark-muted text-sm">No projects matching this filter criteria at the moment.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-24 border border-glass-border-subtle"
+          >
+            <p className="text-on-dark-faint text-sm uppercase tracking-[0.2em]">
+              No projects here yet.
+            </p>
+          </motion.div>
         )}
-
       </div>
     </main>
   );
