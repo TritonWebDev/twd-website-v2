@@ -76,15 +76,6 @@ export function Navigation() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                to="/contact"
-                className="inline-flex px-6 py-2.5 bg-brand text-on-brand tracking-wide transition-all duration-200 ease-out hover:bg-brand-dark hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-                style={{ borderRadius: "2px" }}
-              >
-                Get Started
-              </Link>
-            </li>
           </ul>
 
           {/* Mobile hamburger */}
@@ -122,15 +113,6 @@ export function Navigation() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Link
-                  to="/contact"
-                  className="block w-full text-center py-3 bg-brand text-on-brand text-sm tracking-wide"
-                  style={{ borderRadius: "2px" }}
-                >
-                  Get Started
-                </Link>
-              </li>
             </ul>
           </motion.div>
         )}
