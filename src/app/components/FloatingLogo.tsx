@@ -17,7 +17,7 @@ export function FloatingLogo({ scrollTargetRef }: FloatingLogoProps) {
 
   return (
     <div
-      className="w-full flex justify-center pt-10"
+      className="w-full flex justify-center pt-6"
       style={{ perspective: 1100, perspectiveOrigin: "50% 50%" }}
     >
       <motion.figure

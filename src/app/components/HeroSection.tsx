@@ -37,7 +37,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.55, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-4 inline-flex items-center gap-3 px-8 py-3.5 bg-brand text-on-brand tracking-wide hover:shadow-lg hover:shadow-brand/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out group text-base font-medium"
+        className="mt-2 inline-flex items-center gap-3 px-6 py-3 bg-brand text-on-brand tracking-wide hover:shadow-lg hover:shadow-brand/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out group text-base font-medium"
         style={{ borderRadius: "2px" }}
       >
         <span>Start Your Project</span>

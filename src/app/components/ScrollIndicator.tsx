@@ -28,7 +28,7 @@ export function ScrollIndicator() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, exit: { duration: 1 } }}
+          transition={{ duration: 0.4 }}
           className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-[#6A86AB] hover:text-[#a8e8ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7dd4fc]/60 rounded-full p-2 transition-colors duration-200"
         >
           <motion.span
