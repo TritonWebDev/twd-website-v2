@@ -1,65 +1,58 @@
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useEffect } from "react";
+import { type RefObject } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 
-export function FloatingLogo() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+type FloatingLogoProps = {
+  scrollTargetRef: RefObject<HTMLElement | null>;
+};
 
-  const springConfig = { damping: 25, stiffness: 150 };
+export function FloatingLogo({ scrollTargetRef }: FloatingLogoProps) {
+  const reduceMotion = useReducedMotion();
 
-  const rotateX = useSpring(
-    useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [15, -15]),
-    springConfig
-  );
+  const { scrollYProgress } = useScroll({
+    target: scrollTargetRef,
+    offset: ["start start", "end start"],
+  });
 
-  const rotateY = useSpring(
-    useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-15, 15]),
-    springConfig
-  );
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      mouseX.set(e.clientX - centerX);
-      mouseY.set(e.clientY - centerY);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   return (
-    <motion.figure
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className="relative m-0"
+    <div
+      className="w-full flex justify-center pt-10"
+      style={{ perspective: 1100, perspectiveOrigin: "50% 50%" }}
     >
-      <motion.img
-        src={new URL("/logo.webp", import.meta.url).href}
-        alt="Triton Logo"
-        className="w-64 h-64 md:w-96 md:h-96 drop-shadow-2xl"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      />
+      <motion.figure
+        style={{
+          rotateY: reduceMotion ? 0 : rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        className="relative m-0 flex items-center justify-center size-64 md:size-96"
+      >
+        <motion.img
+          src={new URL("/logo.webp", import.meta.url).href}
+          alt="Triton Logo"
+          draggable={false}
+          className="relative z-10 block w-full h-full object-contain object-center drop-shadow-2xl"
+          style={{ backfaceVisibility: "hidden" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        />
 
-      <motion.span
-        aria-hidden
-        className="absolute inset-0 bg-brand/20 rounded-full blur-3xl block"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-    </motion.figure>
+        <motion.span
+          aria-hidden
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[85%] bg-brand/20 rounded-full blur-3xl pointer-events-none"
+          style={{ transform: "translateZ(-40px)" }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.figure>
+    </div>
   );
 }
